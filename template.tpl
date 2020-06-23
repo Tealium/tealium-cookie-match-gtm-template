@@ -39,15 +39,18 @@ ___TEMPLATE_PARAMETERS___
         "type": "TEXT",
         "name": "tealiumAccount",
         "displayName": "Tealium Account",
+        "valueHint": "(Required)",
+        "help": "(Required) Your Tealium account name.",
         "simpleValueType": true
       },
       {
         "type": "TEXT",
         "name": "tealiumProfile",
         "displayName": "Tealium Profile",
-        "simpleValueType": true,
+        "help": "(Required) Your Tealium profile name. Enter \"main\" if you are unsure.",
+        "valueHint": "(Required) Enter \"main\" if you are unsure", 
         "defaultValue": "main",
-        "help": "Set to default value of  \u0027main\u0027 if not sure"
+        "simpleValueType": true
       }
     ]
   },
@@ -66,7 +69,7 @@ ___TEMPLATE_PARAMETERS___
           {
             "type": "CHECKBOX",
             "name": "enableGoogleAdManager",
-            "checkboxText": "Enable",
+            "checkboxText": "Enable (Tealium will receive the server-side attribute \"google_gid\")",
             "simpleValueType": true
           },
           {
@@ -87,15 +90,15 @@ ___TEMPLATE_PARAMETERS___
           {
             "type": "CHECKBOX",
             "name": "enableTheTradeDesk",
-            "checkboxText": "Enable",
+            "checkboxText": "Enable (Tealium will receive the server-side attribute \"the_trade_desk_id\")",
             "simpleValueType": true
           },
           {
             "type": "TEXT",
             "name": "gdprApplies",
-            "displayName": "GDPR Applies",
-            "simpleValueType": true,
-            "help": "Set this Variable to \"0\" or \"1\" if GDPR applies to the visitor"
+            "displayName": "User is subject to GDPR",
+            "help": "A value that indicates if the current user resides in the European Union (EU), and therefore subject to GDPR.<br><br>Set to \"0\" (default) if the user is not subject to GDPR.<br>Set to \"1\" if the user is subject to GDPR.",
+            "simpleValueType": true
           },
           {
             "type": "TEXT",
@@ -103,7 +106,7 @@ ___TEMPLATE_PARAMETERS___
             "displayName": "GDPR Consent String (IAB)",
             "simpleValueType": true,
             "canBeEmptyString": false,
-            "help": "Map to a Variable which contains the IAB GDPR Consent String."
+            "help": "A Variable which contains the IAB GDPR Consent String."
           }
         ]
       },
@@ -116,7 +119,7 @@ ___TEMPLATE_PARAMETERS___
           {
             "type": "CHECKBOX",
             "name": "enableCriteo",
-            "checkboxText": "Enable",
+            "checkboxText": "Enable (Tealium will receive the server-side attribute \"criteo_id\")",
             "simpleValueType": true
           }
         ]
@@ -130,7 +133,7 @@ ___TEMPLATE_PARAMETERS___
           {
             "type": "CHECKBOX",
             "name": "enableXandr",
-            "checkboxText": "Enable",
+            "checkboxText": "Enable (Tealium will receive the server-side attribute \"adnxs_id\")",
             "simpleValueType": true
           }
         ]
@@ -144,7 +147,7 @@ ___TEMPLATE_PARAMETERS___
           {
             "type": "CHECKBOX",
             "name": "enableKrux",
-            "checkboxText": "Enable",
+            "checkboxText": "Enable (Tealium will receive the server-side attribute \"krux_id\")",
             "simpleValueType": true
           }
         ]
@@ -158,7 +161,7 @@ ___TEMPLATE_PARAMETERS___
           {
             "type": "CHECKBOX",
             "name": "enableMediaMath",
-            "checkboxText": "Enable",
+            "checkboxText": "Enable (Tealium will receive the server-side attribute \"mediamath_id\")",
             "simpleValueType": true
           }
         ]
@@ -172,7 +175,7 @@ ___TEMPLATE_PARAMETERS___
           {
             "type": "CHECKBOX",
             "name": "enableDataXu",
-            "checkboxText": "Enable",
+            "checkboxText": "Enable (Tealium will receive the server-side attribute \"dataxu_id\")",
             "simpleValueType": true
           }
         ]
@@ -186,7 +189,7 @@ ___TEMPLATE_PARAMETERS___
           {
             "type": "CHECKBOX",
             "name": "enableCentro",
-            "checkboxText": "Enable",
+            "checkboxText": "Enable (Tealium will receive the server-side attribute \"centro_id\")",
             "simpleValueType": true
           }
         ]
@@ -211,6 +214,7 @@ const callInWindow = require('callInWindow');
 const getType = require('getType');
 const getTimestamp = require('getTimestamp');
 const makeNumber = require('makeNumber');
+const makeString = require('makeString');
 
 log('data =', data);
 
@@ -299,7 +303,7 @@ const localStoragePrefix = 'tealium_',
                 params.push('ttd_pid=tealium');
                 params.push('ttd_tpi=1');
                 params.push('gdpr=' + data.gdprApplies || '0');
-                if (data.gdprApplies === '1' && data.gdprConsentString !== '') {
+                if (makeString(data.gdprApplies) === '1' && data.gdprConsentString !== '') {
                     params.push('gdpr_consent=' + data.gdprConsentString);
                 }
 
@@ -532,6 +536,8 @@ if (visitorId !== '') {
             if (currentId && currentId !== 'success') {
                 log('Adding param: ' + currentVendor + '_id=', currentId);
                 params.push(currentVendor + '_id' + '=' + currentId);
+                // After sending, set to 'success' so it will not be sent again (in this visit)
+                writeLocalStorage(currentVendor, 'success');
             }
         }
     }
@@ -1145,7 +1151,7 @@ scenarios:
     assertApi('gtmOnSuccess').wasCalled();
 - name: Test 4
   code: |-
-    // Add a test that simulates the timestamp value in localstorage to be from older than 5 days ago
+    // Add a test that simulates the timestamp value in localstorage to be from older than 3 days ago
 
     // Call runCode to run the template's code.
     runCode(mockData);
