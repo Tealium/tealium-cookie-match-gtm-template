@@ -1163,7 +1163,7 @@ setup: |-
 
   const mockData = {
     // Mocked field values
-    tealiumAccount : "integrations",
+    tealiumAccount : "XXXXXXXXXXXX",
     enableGoogleAdManager : true
   };
 
