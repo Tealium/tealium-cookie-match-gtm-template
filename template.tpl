@@ -14,6 +14,7 @@ ___INFO___
   "version": 1,
   "securityGroups": [],
   "displayName": "Tealium Cookie Match (Beta)",
+  "categories": ["ADVERTISING", "CONVERSIONS"],
   "brand": {
     "id": "tealium",
     "displayName": "Tealium",
