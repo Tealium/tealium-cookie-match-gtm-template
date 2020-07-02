@@ -241,6 +241,20 @@ function getVisitorId() {
     return '';
 }
 
+function getTraceId() {
+    const traceCookie = getCookieValues('trace_id');
+
+    log('trace_id cookie=', traceCookie);
+  
+    // For testing purposes
+    if (data.traceId) {
+        return data.traceId;
+    }
+
+    // May be undefined
+    return traceCookie[0];
+}
+
 // Automatically adds a 'tealium_' prefix to all items written to Local Storage
 function writeLocalStorage(key, value) {
     log('Writing to LS:', localStoragePrefix + key + ' = ' + value);
@@ -259,7 +273,7 @@ const localStoragePrefix = 'tealium_',
     vdataEndpoint = 'https://datacloud.tealiumiq.com/vdata/i.gif?',
     tealiumAccount = data.tealiumAccount,
     tealiumProfile = data.tealiumProfile || 'main',
-    traceId = data.traceId,
+    traceId = getTraceId(),
     localStorageTimestampKey = 'match_timestamp',
     lastTimestamp = makeNumber(readLocalStorage(localStorageTimestampKey) || 0),
     currentTimestamp = getTimestamp(),
@@ -281,8 +295,8 @@ const localStoragePrefix = 'tealium_',
                 params.push('tealium_vid=' + visitorId);
                 params.push('tealium_account=' + data.tealiumAccount);
                 params.push('tealium_profile=' + data.tealiumProfile);
-                if (data.traceId) {
-                    params.push('tealium_trace_id=' + data.traceId);
+                if (traceId) {
+                    params.push('tealium_trace_id=' + traceId);
                 }
                 pixel = config.url + params.join('&');
                 log('pixel =', pixel);
@@ -380,8 +394,8 @@ const localStoragePrefix = 'tealium_',
                 params.push('tealium_vid=' + visitorId);
                 params.push('tealium_account=' + data.tealiumAccount);
                 params.push('tealium_profile=' + data.tealiumProfile);
-                if (data.traceId) {
-                    params.push('tealium_trace_id=' + data.traceId);
+                if (traceId) {
+                    params.push('tealium_trace_id=' + traceId);
                 }
                 // Redirect endpoint does not appear to be URI encoded in their documentation
                 pixel = config.url + vdataEndpoint + params.join('&');
@@ -431,8 +445,8 @@ const localStoragePrefix = 'tealium_',
                 params.push('tealium_vid=' + visitorId);
                 params.push('tealium_account=' + data.tealiumAccount);
                 params.push('tealium_profile=' + data.tealiumProfile);
-                if (data.traceId) {
-                    params.push('tealium_trace_id=' + data.traceId);
+                if (traceId) {
+                    params.push('tealium_trace_id=' + traceId);
                 }
 
                 script = config.url + 'sync=auto&mt_exid=10077&exsync=' + encodeUriComponent(vdataEndpoint + params.join('&'));
@@ -456,8 +470,8 @@ const localStoragePrefix = 'tealium_',
                 params.push('tealium_vid=' + visitorId);
                 params.push('tealium_account=' + data.tealiumAccount);
                 params.push('tealium_profile=' + data.tealiumProfile);
-                if (data.traceId) {
-                    params.push('tealium_trace_id=' + data.traceId);
+                if (traceId) {
+                    params.push('tealium_trace_id=' + traceId);
                 }
 
                 pixel = config.url + 'st=TEALIUM&rurl=' + encodeUriComponent(vdataEndpoint + params.join('&'));
@@ -480,8 +494,8 @@ const localStoragePrefix = 'tealium_',
                 params.push('tealium_vid=' + visitorId);
                 params.push('tealium_account=' + data.tealiumAccount);
                 params.push('tealium_profile=' + data.tealiumProfile);
-                if (data.traceId) {
-                    params.push('tealium_trace_id=' + data.traceId);
+                if (traceId) {
+                    params.push('tealium_trace_id=' + traceId);
                 }
 
                 pixel = config.url + 'rurl=' + encodeUriComponent(vdataEndpoint + params.join('&'));
@@ -548,8 +562,8 @@ if (visitorId !== '') {
         params.push('tealium_vid=' + visitorId);
         params.push('tealium_account=' + data.tealiumAccount);
         params.push('tealium_profile=' + data.tealiumProfile);
-        if (data.traceId) {
-            params.push('tealium_trace_id=' + data.traceId);
+        if (traceId) {
+            params.push('tealium_trace_id=' + traceId);
         }
 
         pixel = vdataEndpoint + params.join('&');
@@ -959,6 +973,10 @@ ___WEB_PERMISSIONS___
               {
                 "type": 1,
                 "string": "TEAL"
+              },
+              {
+                "type": 1,
+                "string": "trace_id"
               },
               {
                 "type": 1,
