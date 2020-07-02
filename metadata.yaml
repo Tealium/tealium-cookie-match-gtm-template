@@ -15,5 +15,7 @@
 homepage: "https://tealium.com"
 documentation: "https://docs.tealium.com/platforms/"
 versions:
+  - sha: 76f15a44a920e5584af692ed7b39d505d9ed12ac
+    changeNotes: Add support for trace_id from cookie
   - sha: 8eb8291375492c95e9afcfe454babf6a9c29aafa
     changeNotes: Initial Version
