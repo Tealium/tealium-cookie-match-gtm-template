@@ -15,6 +15,8 @@
 homepage: "https://tealium.com"
 documentation: "https://docs.tealium.com/platforms/"
 versions:
+  - sha: 4f90e70687cf0203aed277ed11db90cd064bca9e
+    changeNotes: Removing Beta label
   - sha: 76f15a44a920e5584af692ed7b39d505d9ed12ac
     changeNotes: Add support for trace_id from cookie
   - sha: 8eb8291375492c95e9afcfe454babf6a9c29aafa
