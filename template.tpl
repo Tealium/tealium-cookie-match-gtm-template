@@ -190,7 +190,7 @@ ___TEMPLATE_PARAMETERS___
           {
             "type": "CHECKBOX",
             "name": "enableCentro",
-            "checkboxText": "Enable (Tealium will receive the server-side attribute \"centro_id\")",
+            "checkboxText": "Enable (Tealium will receive the server-side attribute \"externalID\")",
             "simpleValueType": true
           }
         ]
