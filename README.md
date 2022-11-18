@@ -2,7 +2,7 @@
 
 ## Overview
 
-This is the Google Tag Manager template for the Tealium Coookie Match tag.
+This is the Google Tag Manager template for the Tealium Cookie Match tag.
 
 The Tealium Cookie Match tag template allows you to enable and configure vendor-specific cookie-match features for a number of vendors.  The following vendors are supported:
  - Centro
