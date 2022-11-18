@@ -15,6 +15,8 @@
 homepage: "https://tealium.com"
 documentation: "https://docs.tealium.com/platforms/"
 versions:
+  - sha: 926493d362dacee1bf5986456dab6bb5d42ad94e
+    changeNotes: Update to Centro ID attribute name
   - sha: 4f90e70687cf0203aed277ed11db90cd064bca9e
     changeNotes: Removing Beta label
   - sha: 76f15a44a920e5584af692ed7b39d505d9ed12ac
