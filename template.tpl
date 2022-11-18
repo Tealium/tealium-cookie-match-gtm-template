@@ -86,7 +86,7 @@ ___TEMPLATE_PARAMETERS___
             "name": "googleAdManagerHostedMatchValue",
             "displayName": "Google Hosted Match Value",
             "simpleValueType": true,
-            "help": "Value must be a maximum of 40 bytes"
+            "help": "Identifier to send to Google for hosted matching. Value must be a maximum of 40 bytes"
           }
         ]
       },
