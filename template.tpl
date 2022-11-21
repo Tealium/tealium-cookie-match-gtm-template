@@ -49,7 +49,7 @@ ___TEMPLATE_PARAMETERS___
         "name": "tealiumProfile",
         "displayName": "Tealium Profile",
         "help": "(Required) Your Tealium profile name. Enter \"main\" if you are unsure.",
-        "valueHint": "(Required) Enter \"main\" if you are unsure", 
+        "valueHint": "(Required) Enter \"main\" if you are unsure",
         "defaultValue": "main",
         "simpleValueType": true
       }
@@ -77,8 +77,16 @@ ___TEMPLATE_PARAMETERS___
             "type": "TEXT",
             "name": "googleAdManagerNetworkId",
             "displayName": "Network ID",
+            "defaultValue": "tealium_dmp",
             "simpleValueType": true,
-            "help": "Your Google-provided Network or Buyer ID"
+            "help": "Your Google-provided Network or Buyer ID (tealium_dmp if using the AudienceStream connector)"
+          },
+          {
+            "type": "TEXT",
+            "name": "googleAdManagerHostedMatchValue",
+            "displayName": "Google Hosted Match Value",
+            "simpleValueType": true,
+            "help": "Identifier to send to Google for hosted matching. Value must be a maximum of 40 bytes"
           }
         ]
       },
@@ -216,6 +224,7 @@ const getType = require('getType');
 const getTimestamp = require('getTimestamp');
 const makeNumber = require('makeNumber');
 const makeString = require('makeString');
+const toBase64 = require('toBase64');
 
 log('data =', data);
 
@@ -223,7 +232,7 @@ function getVisitorId() {
     const tealCookie = getCookieValues('TEAL');
 
     log('TEAL cookie=', tealCookie);
-  
+
     // For testing purposes or for retrieving visitor id from some other place than the TEAL cookie)
     if (data.tealiumVisitorId) {
          return data.tealiumVisitorId;
@@ -245,7 +254,7 @@ function getTraceId() {
     const traceCookie = getCookieValues('trace_id');
 
     log('trace_id cookie=', traceCookie);
-  
+
     // For testing purposes
     if (data.traceId) {
         return data.traceId;
@@ -284,6 +293,7 @@ const localStoragePrefix = 'tealium_',
             enabled: data.enableGoogleAdManager,
             url: 'https://cm.g.doubleclick.net/pixel?',
             networkId: data.googleAdManagerNetworkId,
+            hm: toBase64(data.googleAdManagerHostedMatchValue),
             run: function(name, config) {
                 var params = [],
                     pixel;
@@ -292,6 +302,7 @@ const localStoragePrefix = 'tealium_',
                 params.push('tealium_cookie_sync=true');
                 params.push('google_nid=' + config.networkId);
                 params.push('google_cm');
+                params.push('google_hm=' + config.hm);
                 params.push('tealium_vid=' + visitorId);
                 params.push('tealium_account=' + data.tealiumAccount);
                 params.push('tealium_profile=' + data.tealiumProfile);
@@ -346,7 +357,7 @@ const localStoragePrefix = 'tealium_',
                     log('pixel =', pixel);
                     sendPixel(pixel, function() {
                         log('Success for:', name);
-                        // Retreive value from Tealium cookie and call JSONP function to write into Local Storage       
+                        // Retreive value from Tealium cookie and call JSONP function to write into Local Storage
                         callLater(function() {
                             log('LATER: TheTradeDesk Tealium Cookie Match');
                             injectScript('https://datacloud.tealiumiq.com/tealium_ttd/main/16/i.js?jsonp=tealium_the_trade_desk_function',
