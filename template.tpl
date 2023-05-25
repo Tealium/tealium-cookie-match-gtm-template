@@ -79,14 +79,14 @@ ___TEMPLATE_PARAMETERS___
             "displayName": "Network ID",
             "defaultValue": "tealium_dmp",
             "simpleValueType": true,
-            "help": "Your Google-provided Network or Buyer ID (tealium_dmp if using the AudienceStream connector)"
+            "help": "Your Google-provided Network or Buyer ID (tealium_dmp if using Tealium-hosted matching)"
           },
           {
             "type": "TEXT",
             "name": "googleAdManagerHostedMatchValue",
             "displayName": "Google Hosted Match Value",
             "simpleValueType": true,
-            "help": "Identifier to send to Google for hosted matching. Value must be a maximum of 40 bytes"
+            "help": "Identifier to send to Google for Google-hosted matching. Value must be a maximum of 40 bytes"
           }
         ]
       },
