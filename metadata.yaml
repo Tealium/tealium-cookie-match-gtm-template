@@ -15,7 +15,7 @@
 homepage: "https://tealium.com"
 documentation: "https://docs.tealium.com/platforms/"
 versions:
-  - sha: 92a1000ecab636af8d24b2fe8037273bc2efb6f0
+  - sha: f508220b5e799b843de3da3740fc70cae4eaec4f
     changeNotes: Added Google hosted-matching support
   - sha: 926493d362dacee1bf5986456dab6bb5d42ad94e
     changeNotes: Update to Centro ID attribute name
