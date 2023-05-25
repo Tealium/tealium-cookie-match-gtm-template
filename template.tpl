@@ -70,7 +70,7 @@ ___TEMPLATE_PARAMETERS___
           {
             "type": "CHECKBOX",
             "name": "enableGoogleAdManager",
-            "checkboxText": "Enable (Tealium will receive the server-side attribute \"google_gid\")",
+            "checkboxText": "Enable (Tealium will receive the server-side attribute \"google_gid\" for Tealium-hosted matching.)",
             "simpleValueType": true
           },
           {
@@ -79,14 +79,14 @@ ___TEMPLATE_PARAMETERS___
             "displayName": "Network ID",
             "defaultValue": "tealium_dmp",
             "simpleValueType": true,
-            "help": "Your Google-provided Network or Buyer ID (tealium_dmp if using Tealium-hosted matching)"
+            "help": "Your Google-provided Network or Buyer ID. Enter tealium_dmp if using Tealium-hosted matching."
           },
           {
             "type": "TEXT",
             "name": "googleAdManagerHostedMatchValue",
             "displayName": "Google Hosted Match Value",
             "simpleValueType": true,
-            "help": "Identifier to send to Google for Google-hosted matching. Value must be a maximum of 40 bytes"
+            "help": "Identifier to send to Google for Google-hosted matching. Value must be a maximum of 40 bytes. The template will base64 encode the value."
           }
         ]
       },
