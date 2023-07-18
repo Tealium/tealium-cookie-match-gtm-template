@@ -15,6 +15,8 @@
 homepage: "https://tealium.com"
 documentation: "https://docs.tealium.com/platforms/"
 versions:
+  - sha: 74d34fe2bf70865a637a5ec4b9116a34d96fa06f
+    changeNotes: Bug fix
   - sha: f508220b5e799b843de3da3740fc70cae4eaec4f
     changeNotes: Added Google hosted-matching support
   - sha: 926493d362dacee1bf5986456dab6bb5d42ad94e
