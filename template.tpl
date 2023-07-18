@@ -293,7 +293,7 @@ const localStoragePrefix = 'tealium_',
             enabled: data.enableGoogleAdManager,
             url: 'https://cm.g.doubleclick.net/pixel?',
             networkId: data.googleAdManagerNetworkId,
-            hm: toBase64(data.googleAdManagerHostedMatchValue),
+            hm: data.googleAdManagerHostedMatchValue || "",
             run: function(name, config) {
                 var params = [],
                     pixel;
@@ -302,7 +302,7 @@ const localStoragePrefix = 'tealium_',
                 params.push('tealium_cookie_sync=true');
                 params.push('google_nid=' + config.networkId);
                 params.push('google_cm');
-                params.push('google_hm=' + config.hm);
+                params.push('google_hm=' + toBase64(config.hm));
                 params.push('tealium_vid=' + visitorId);
                 params.push('tealium_account=' + data.tealiumAccount);
                 params.push('tealium_profile=' + data.tealiumProfile);
