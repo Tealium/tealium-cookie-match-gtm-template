@@ -87,6 +87,27 @@ ___TEMPLATE_PARAMETERS___
             "displayName": "Google Hosted Match Value",
             "simpleValueType": true,
             "help": "Identifier to send to Google for Google-hosted matching. Value must be a maximum of 40 bytes. The template will base64 encode the value."
+          },
+          {
+            "type": "TEXT",
+            "name": "googleAdManagerGDPRValue",
+            "displayName": "GDPR",
+            "simpleValueType": true,
+            "help": "Indicates that the request is subject to GDPR restrictions on data usage."
+          },
+          {
+            "type": "TEXT",
+            "name": "googleAdManagerGDPRConsentValue",
+            "displayName": "GDPR Consent",
+            "simpleValueType": true,
+            "help": "A TC string that represents the end-user consent."
+          },
+          {
+            "type": "TEXT",
+            "name": "googleAdManagerProcessConsentValue",
+            "displayName": "Process Consent",
+            "simpleValueType": true,
+            "help": "Indicates that the bidder has obtained end-user consent for the data uses specified in Google's EU User Consent Policy."
           }
         ]
       },
@@ -250,6 +271,7 @@ function getVisitorId() {
     return '';
 }
 
+
 function getTraceId() {
     const traceCookie = getCookieValues('trace_id');
 
@@ -262,6 +284,10 @@ function getTraceId() {
 
     // May be undefined
     return traceCookie[0];
+}
+
+function getTCFString() {
+
 }
 
 // Automatically adds a 'tealium_' prefix to all items written to Local Storage
@@ -286,6 +312,9 @@ const localStoragePrefix = 'tealium_',
     localStorageTimestampKey = 'match_timestamp',
     lastTimestamp = makeNumber(readLocalStorage(localStorageTimestampKey) || 0),
     currentTimestamp = getTimestamp(),
+    google_gdpr = data.googleAdManagerGDPRValue || '',
+    google_gdprConsent = data.googleAdManagerGDPRConsentValue || '',
+    google_processConsent = googleAdManagerProcessConsentValue || '',
     daysBeforeRetry = 3,
     vendorConfig = {
         // https://developers.google.com/authorized-buyers/rtb/cookie-guide
@@ -308,6 +337,15 @@ const localStoragePrefix = 'tealium_',
                 params.push('tealium_profile=' + data.tealiumProfile);
                 if (traceId) {
                     params.push('tealium_trace_id=' + traceId);
+                }
+                if(google_gdpr) {
+                    params.push('gdpr=' + google_gdpr);
+                }
+                if(google_gdprConsent) {
+                    params.push('gdpr_consent=' + google_gdprConsent);
+                }
+                if(google_processConsent) {
+                    params.push('process_consent=' + google_processConsent);
                 }
                 pixel = config.url + params.join('&');
                 log('pixel =', pixel);
