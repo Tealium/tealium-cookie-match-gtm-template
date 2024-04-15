@@ -314,7 +314,7 @@ const localStoragePrefix = 'tealium_',
     currentTimestamp = getTimestamp(),
     google_gdpr = data.googleAdManagerGDPRValue || '',
     google_gdprConsent = data.googleAdManagerGDPRConsentValue || '',
-    google_processConsent = googleAdManagerProcessConsentValue || '',
+    google_processConsent = data.googleAdManagerProcessConsentValue || '',
     daysBeforeRetry = 3,
     vendorConfig = {
         // https://developers.google.com/authorized-buyers/rtb/cookie-guide
