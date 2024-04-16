@@ -104,6 +104,13 @@ ___TEMPLATE_PARAMETERS___
           },
           {
             "type": "TEXT",
+            "name": "googleAdManagerAddtlConsentValue",
+            "displayName": "Additional Consent",
+            "simpleValueType": true,
+            "help" : "Additional Consent string from CMP"
+          },
+          {
+            "type": "TEXT",
             "name": "googleAdManagerProcessConsentValue",
             "displayName": "Process Consent",
             "simpleValueType": true,
@@ -314,6 +321,7 @@ const localStoragePrefix = 'tealium_',
     currentTimestamp = getTimestamp(),
     google_gdpr = data.googleAdManagerGDPRValue || '',
     google_gdprConsent = data.googleAdManagerGDPRConsentValue || '',
+    google_addtlConsent = data.googleAdManagerAddtlConsentValue || '',
     google_processConsent = data.googleAdManagerProcessConsentValue || '',
     daysBeforeRetry = 3,
     vendorConfig = {
@@ -343,6 +351,9 @@ const localStoragePrefix = 'tealium_',
                 }
                 if(google_gdprConsent) {
                     params.push('gdpr_consent=' + google_gdprConsent);
+                }
+                if(google_addtlConsent) {
+                    params.push('addtl_consent=' + google_addtlConsent);
                 }
                 if(google_processConsent) {
                     params.push('process_consent=' + google_processConsent);
