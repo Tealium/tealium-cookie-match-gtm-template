@@ -15,6 +15,8 @@
 homepage: "https://tealium.com"
 documentation: "https://docs.tealium.com/platforms/"
 versions:
+  - sha: 6cf7474a73fe98a7cff57b68afc827bb9f57e696
+    changeNotes: adding additional consent mapping for Google cookie matching
   - sha: 3bf4508c6e0fec6715f69b52c90fee404ecc401f
     changeNotes: Added IAB/TCF mapping support
   - sha: 74d34fe2bf70865a637a5ec4b9116a34d96fa06f
